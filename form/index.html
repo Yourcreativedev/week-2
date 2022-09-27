@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        .red
+        {
+            color: red;
+        }
+        .green
+        {
+            color: green;
+        }
+    </style>
+    <script>
+        var city
+        function nameValidate()
+        {
+            var name = document.getElementById('name').value;
+            var status = containsNumbers(name)
+            if(name == "")
+            {
+                document.getElementById('err_name').innerHTML = "Name Cannot be empty"
+                document.getElementById('err_name').classList.remove('green')
+                document.getElementById('err_name').classList.add('red')
+            }
+            else if (status == true)
+            {
+                document.getElementById('err_name').innerHTML = "Name Cannot contain any number"
+                document.getElementById('err_name').classList.remove('green')
+                document.getElementById('err_name').classList.add('red')
+            }
+            else if(name.length > 20)
+            {
+                document.getElementById('err_name').innerHTML = "Name Cannot be longer than 20 letters"
+                document.getElementById('err_name').classList.remove('green')
+                document.getElementById('err_name').classList.add('red')
+            }
+            else
+            {
+                document.getElementById('err_name').innerHTML = "OK"
+                document.getElementById('err_name').classList.remove('red')
+                document.getElementById('err_name').classList.add('green')
+            }
+        }
+        function ageValidate()
+        {
+            var age =  document.getElementById('age').value
+            if(age == '')
+            {
+                document.getElementById('err_age').innerHTML = "Age Cannot be empty"
+                document.getElementById('err_age').classList.remove('green')
+                document.getElementById('err_age').classList.add('red')
+            }
+            else if(age>100)
+            {
+                document.getElementById('err_age').innerHTML = "Age Cannot be more than 100 years"
+                document.getElementById('err_age').classList.remove('green')
+                document.getElementById('err_age').classList.add('red')
+            }
+            else if(containsOnlyNumbers(age) == false)
+            {
+                document.getElementById('err_age').innerHTML = "Age must contain only numbers"
+                document.getElementById('err_age').classList.remove('green')
+                document.getElementById('err_age').classList.add('red')
+            }
+            else{
+                document.getElementById('err_age').innerHTML = "OK"
+                document.getElementById('err_age').classList.remove('red')
+                document.getElementById('err_age').classList.add('green')
+            }
+        }
+
+        function formCityValidate()
+        {
+            var form_city = document.getElementById('fromcity').value
+            if(form_city == '')
+            {
+                document.getElementById('err_fromcity').innerHTML = "This cannoty be empty"
+                document.getElementById('err_fromcity').classList.remove('green')
+                document.getElementById('err_fromcity').classList.add('red')
+            }
+            else{
+                city = form_city
+                document.getElementById('err_fromcity').innerHTML = "OK"
+                document.getElementById('err_fromcity').classList.remove('red')
+                document.getElementById('err_fromcity').classList.add('green')
+            }
+        }
+
+        function toCityValidate()
+        {
+            var to_city = document.getElementById('tocity').value
+            if(to_city == '')
+            {
+                document.getElementById('err_tocity').innerHTML = "This cannoty be empty"
+                document.getElementById('err_tocity').classList.remove('green')
+                document.getElementById('err_tocity').classList.add('red')
+            }
+            else if(to_city.toLowerCase() == city.toLowerCase())
+            {
+                document.getElementById('err_tocity').innerHTML = "This cannoty be same with departing city"
+                document.getElementById('err_tocity').classList.remove('green')
+                document.getElementById('err_tocity').classList.add('red')
+            }
+            else
+            {
+                document.getElementById('err_tocity').innerHTML = "OK"
+                document.getElementById('err_tocity').classList.remove('red')
+                document.getElementById('err_tocity').classList.add('green')
+            }
+        }
+        
+        function regNoValidate()
+        {
+            var reg_no = document.getElementById('reg_id').value
+            if(reg_no == '')
+            {
+                document.getElementById('err_reg').innerHTML = "Registration Numbers cannot be empty"
+                document.getElementById('err_reg').classList.remove('green')
+                document.getElementById('err_reg').classList.add('red')
+            }
+            else if(containsOnlyNumbers(reg_no) == false)
+            {
+                document.getElementById('err_reg').innerHTML = "Registration can only contain digits 0-9"
+                document.getElementById('err_reg').classList.remove('green')
+                document.getElementById('err_reg').classList.add('red')
+            }
+            else if(reg_no.length > 9)
+            {
+                document.getElementById('err_reg').innerHTML = "Registration Numbers cannot be longer than 9 digits"
+                document.getElementById('err_reg').classList.remove('green')
+                document.getElementById('err_reg').classList.add('red')
+            }
+            else if(reg_no.length < 9)
+            {
+                document.getElementById('err_reg').innerHTML = "Registration Numbers cannot be less than 9 digits"
+                document.getElementById('err_reg').classList.remove('green')
+                document.getElementById('err_reg').classList.add('red')
+            }
+            else
+            {
+                document.getElementById('err_reg').innerHTML = "OK"
+                document.getElementById('err_reg').classList.remove('red')
+                document.getElementById('err_reg').classList.add('green')
+            }
+        }
+
+        function finalValidation()
+        {
+            var error_msg = document.getElementById('err_form')
+            var statusList = new Array()
+            statusList.push(document.getElementById('err_name').innerHTML)
+            statusList.push(document.getElementById('err_age').innerHTML)
+            statusList.push(document.getElementById('err_fromcity').innerHTML) 
+            statusList.push(document.getElementById('err_tocity').innerHTML)
+            statusList.push(document.getElementById('err_reg').innerHTML)
+            statusList.forEach(function (item){
+                if(item == '')
+                {
+                    document.getElementById('err_form').innerHTML = "Fill Up all the fields"
+                    error_msg.classList.remove('green')
+                    error_msg.classList.add('red')
+                }
+                else if(item != 'OK')
+                {
+                    document.getElementById('err_form').innerHTML = "Fill Up the form properly"
+                    error_msg.classList.add('red')
+                }
+                else
+                {
+                    document.getElementById('err_form').innerHTML = "Success"
+                    error_msg.classList.add('green')
+                }
+            })
+        }
+
+        function containsNumbers(str)
+        {
+            return /\d/.test(str);
+        }
+
+        function containsOnlyNumbers(str)
+        {
+            return /^\d+$/.test(str);
+        }
+    </script>
+</head>
+<body>
+
+    <form id="form" style="width:60%;margin:50px auto;display:flex;flex-direction:column;align-items: center;border:3px solid #000;">
+        <h1>FORM</h1>
+        <h3 id="err_form"></h3>
+        <div style="display:flex;flex-direction: column;align-items:center;justify-content:center;width:60%;">
+            <h3>Enter name :</h3>
+            <input type="text" id="name" style="margin:5px 10px 5px 10px;padding:5px 15px;" onblur="nameValidate()" />
+            <p id="err_name"></p>
+        </div>
+    
+        <div style="display:flex;flex-direction: column;align-items:center;justify-content:center;width:60%;">
+            <h3>Enter age :</h3>
+            <input type="text" id="age" style="margin:5px 10px 5px 10px;padding:5px 15px;" onblur="ageValidate()" />
+            <p id="err_age"></p>
+        </div>
+    
+        <div style="display:flex;flex-direction: column;align-items:center;justify-content:center;width:60%;">
+            <h3>Enter departing city :</h3>
+            <input type="text" id="fromcity" style="margin:5px 10px 5px 10px;padding:5px 15px;" onblur="formCityValidate()" />
+            <p id="err_fromcity"></p>
+        </div>
+    
+        <div style="display:flex;flex-direction: column;align-items:center;justify-content:center;width:60%;">
+            <h3>Enter arriving city :</h3>
+            <input type="text" id="tocity" style="margin:5px 10px 5px 10px;padding:5px 15px;" onblur="toCityValidate()" />
+            <p id="err_tocity"></p>
+        </div>
+    
+        <div style="display:flex;flex-direction: column;align-items:center;justify-content:center;width:60%;">
+            <h3>Enter Registration Number :</h3>
+            <input type="text" id="reg_id" style="margin:5px 10px 5px 10px;padding:5px 15px;" onblur="regNoValidate()" />
+            <p id="err_reg"></p>
+        </div>
+    
+        <div style="display:flex;flex-direction: column;align-items:center;justify-content:center;width:60%;">
+            <input type="button" value="Submit" style="margin:5px 10px 5px 10px;padding:5px 15px;padding:10px 15px;font-size:25px;" onclick="finalValidation()" />
+        </div>
+
+    </form>
+</body>
+</html>
